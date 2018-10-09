@@ -300,7 +300,7 @@ volk_8i_convert_64f_neon(double* outputVector, const int8_t* inputVector,
   int8x8x2_t inputVal;
   float64x2x4_t outputDouble;
   int16x8_t tmp1;
-  int16x4_t tmp2;
+  int32x4_t tmp2;
   
   unsigned int number = 0;
   const unsigned int sixteenthPoints = num_points / 16;
@@ -313,7 +313,7 @@ volk_8i_convert_64f_neon(double* outputVector, const int8_t* inputVector,
 
       tmp1 = vmovl_s8(inputVal.val[0]);
 
-      tmp2 = vget_low_s16(tmp1);
+      tmp2 = vmovl_s16(vget_low_s16(tmp1));
 
       outputDouble.val[0] = vcvtq_f64_s64(vmovl_s32(vget_low_s32(tmp2)));
       outputDouble.val[0] = vmulq_f64(outputDouble.val[0], qmulScalar);
@@ -325,7 +325,7 @@ volk_8i_convert_64f_neon(double* outputVector, const int8_t* inputVector,
       vst1q_f64(outputVectorPtr, outputDouble.val[1]);
       outputVectorPtr += 2;
 
-      tmp2 = vget_high_s16(tmp1);
+      tmp2 = vmovl_s16(vget_high_s16(tmp1));
 
       outputDouble.val[0] = vcvtq_f64_s64(vmovl_s32(vget_low_s32(tmp2)));
       outputDouble.val[0] = vmulq_f64(outputDouble.val[0], qmulScalar);
@@ -339,7 +339,7 @@ volk_8i_convert_64f_neon(double* outputVector, const int8_t* inputVector,
 
       tmp1 = vmovl_s8(inputVal.val[1]);
 
-      tmp2 = vget_low_s16(tmp1);
+      tmp2 = vmovl_s16(vget_low_s16(tmp1));
 
       outputDouble.val[0] = vcvtq_f64_s64(vmovl_s32(vget_low_s32(tmp2)));
       outputDouble.val[0] = vmulq_f64(outputDouble.val[0], qmulScalar);
@@ -351,7 +351,7 @@ volk_8i_convert_64f_neon(double* outputVector, const int8_t* inputVector,
       vst1q_f64(outputVectorPtr, outputDouble.val[1]);
       outputVectorPtr += 2;
 
-      tmp2 = vget_high_s16(tmp1);
+      tmp2 = vmovl_s16(vget_high_s16(tmp1));
 
       outputDouble.val[0] = vcvtq_f64_s64(vmovl_s32(vget_low_s32(tmp2)));
       outputDouble.val[0] = vmulq_f64(outputDouble.val[0], qmulScalar);
