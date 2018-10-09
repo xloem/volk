@@ -125,7 +125,7 @@ volk_8u_convert_32f_u_sse4_1(float* outputVector, const uint8_t* inputVector,
 #ifdef LV_HAVE_GENERIC
 
 static inline void
-volk_8u_convert_32f_u_generic(float* outputVector, const uint8_t* inputVector,
+volk_8u_convert_32f_generic(float* outputVector, const uint8_t* inputVector,
                             unsigned int num_points)
 {
   float* outputVectorPtr = outputVector;
@@ -143,8 +143,8 @@ volk_8u_convert_32f_u_generic(float* outputVector, const uint8_t* inputVector,
 #ifdef LV_HAVE_GENERIC
 
 static inline void
-volk_8u_convert_32f_u_generic_lut8(float* outputVector, const uint8_t* inputVector,
-                                   unsigned int num_points)
+volk_8u_convert_32f_generic_lut8(float* outputVector, const uint8_t* inputVector,
+                                 unsigned int num_points)
 {
   /* generate lookup table */
   #define gen(x) (((x) - 127.5f) / 127.5f)
@@ -170,20 +170,6 @@ volk_8u_convert_32f_u_generic_lut8(float* outputVector, const uint8_t* inputVect
   }
 }
 #endif /* LV_HAVE_GENERIC */
-
-
-#ifdef LV_HAVE_ORC
-extern void
-volk_8u_convert_32f_a_orc_impl(float* outputVector, const uint8_t* inputVector,
-                               unsigned int num_points);
-
-static inline void
-volk_8u_convert_32f_u_orc(float* outputVector, const uint8_t* inputVector,
-                          unsigned int num_points)
-{
-  volk_8u_convert_32f_a_orc_impl(outputVector, inputVector, num_points);
-}
-#endif /* LV_HAVE_ORC */
 
 
 #endif /* INCLUDED_VOLK_8u_CONVERT_32f_u_H */
@@ -321,40 +307,18 @@ volk_8u_convert_32f_neon(float* outputVector, const uint8_t* inputVector,
 
 #endif /* LV_HAVE_NEON */
 
-#ifdef LV_HAVE_GENERIC
-
-static inline void
-volk_8u_convert_32f_a_generic(float* outputVector, const uint8_t* inputVector,
-                              unsigned int num_points)
-{
-  volk_8u_convert_32f_u_generic(outputVector, inputVector, num_points);
-}
-#endif /* LV_HAVE_GENERIC */
-
-#ifdef LV_HAVE_GENERIC
-
-static inline void
-volk_8u_convert_32f_a_generic_lut8(float* outputVector, const uint8_t* inputVector,
-                                   unsigned int num_points)
-{
-  volk_8u_convert_32f_u_generic_lut8(outputVector, inputVector, num_points);
-}
-#endif /* LV_HAVE_GENERIC */
-
 
 #ifdef LV_HAVE_ORC
 extern void
 volk_8u_convert_32f_a_orc_impl(float* outputVector, const uint8_t* inputVector,
-                               unsigned int num_points);
+                             unsigned int num_points);
 
 static inline void
-volk_8u_convert_32f_a_orc(float* outputVector, const uint8_t* inputVector,
-                          unsigned int num_points)
+volk_8u_convert_32f_orc(float* outputVector, const uint8_t* inputVector,
+                        unsigned int num_points)
 {
   volk_8u_convert_32f_a_orc_impl(outputVector, inputVector, num_points);
 }
 #endif /* LV_HAVE_ORC */
-
-
 
 #endif /* INCLUDED_VOLK_8u_CONVERT_32f_a_H */
